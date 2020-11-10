@@ -39,7 +39,7 @@ char encryption[10];
 void generate_keys(mpz_t p, mpz_t q) {
     //Miller-Rabin Prime: Determine whether n is prime. Return 2 if n is definitely prime, 
     // return 1 if n is probably prime (without being certain), or return 0 if n is definitely non-prime.
-    if (mpz_probab_prime_p(p, 1) == 2 && mpz_probab_prime_p(q, 1) == 2){
+    if (mpz_probab_prime_p(p, 50) == 2 && mpz_probab_prime_p(q, 1) == 50){
         if (p == q){
             cout << " Cannot have identical prime numbers"<<endl;
         }
@@ -91,6 +91,8 @@ void generate_keys(mpz_t p, mpz_t q) {
     //     // d = fmod(1/e, phi);
     //     d = (1 + (2*toient))/e;
         // d = 1/e % toient;
+    // mpz_invert op1*rop = 1 mod op2
+
 
 
     //     if (e*d == 1 % phi){
