@@ -1,3 +1,7 @@
+// Amanda Ly
+// RSA using GMP
+// Programs should be linked with the libgmpxx and libgmp libraries
+
 #include <iostream>
 #include <gmp.h>
 #include "gmpxx.h"
@@ -20,49 +24,25 @@ using namespace std;
         Used to make the number generation of public key more random than would be using rand.
 */
 
-char encryption[10];
-
-// x^n mod m
-// int powermod(int x, int n, int m)
-// {
-// 	int prod = 1;
-// 	while (n > 0) {
-// 		if (n % 2 != 0) {
-// 			prod = (prod * x) % m;
-// 		}
-// 		x = x * x % m;
-// 		n = n / 2;
-// 	}
-// 	return prod;
-// }
+mpz_t e, d;
+vector <int> arr;
 
 void generate_keys(mpz_t p, mpz_t q) {
     //Miller-Rabin Prime: Determine whether n is prime. Return 2 if n is definitely prime, 
     // return 1 if n is probably prime (without being certain), or return 0 if n is definitely non-prime.
-    if (mpz_probab_prime_p(p, 50) == 2 && mpz_probab_prime_p(q, 1) == 50){
+    if (mpz_probab_prime_p(p, 50) == 2 && mpz_probab_prime_p(q, 50) == 2){
         if (p == q){
             cout << " Cannot have identical prime numbers"<<endl;
         }
 
-        mpz_t n, phi, e, check, d;
-        mpz_inits(n, phi, e, check, d, NULL);
-        mpz_mul(n, p, q);
+        mpz_t phi, check;
+        mpz_inits(phi, e, check, d, NULL);
+        // mpz_mul(n, p, q);
         mpz_sub_ui(p, p, 1);
         mpz_sub_ui(q, q, 1);
         mpz_mul(phi, p, q);
 
-        cout << "n: " << n << " phi: " << phi << endl;
-
-        // int n = p * q;//calculate n
-        // int phi = (p-1) * (q-1)
-        // int toient = lcm(p-1, q-1);
-
-        // cout << phi << endl;
-
-    //     cout<<"\n"<<"p = "<<p;
-    //     cout<<"\n"<<"q = "<<q;
-    //     cout<<"\n"<<"n = p*q = "<<n;
-    //     cout<<"\n"<<"phi = "<<phi<< endl;
+        // cout << "n: " << n << " phi: " << phi << endl;
 
     //     // E such that 1 < e < phi(n) and gcd(e, phi(n)) = 1
         // random_device rd;
@@ -72,128 +52,99 @@ void generate_keys(mpz_t p, mpz_t q) {
         gmp_randinit_mt(rd);
         mpz_urandomm(e, rd, phi);
 
-        cout << "e: " << e << endl;
+        // cout << "e: " << e << endl;
 
         while (mpz_cmp(e, phi) < 0){
             mpz_gcd(check, e, phi);
-            cout << "check: " << check << endl;
+            // cout << "check: " << check << endl;
             if (mpz_cmp_ui(check, 1) == 0){
                 break;
             }
             else {
                 mpz_urandomm(e, rd, phi);
-                cout << "next e: " << e << endl;
+                // cout << "next e: " << e << endl;
             }
         }
-        cout << "final e: " << e << endl;
+        // cout << "final e: " << e << endl;
         
-    //     // D ≡ e^−1 (mod phi(n))
-    //     // d = fmod(1/e, phi);
-    //     d = (1 + (2*toient))/e;
-        // d = 1/e % toient;
-    // mpz_invert op1*rop = 1 mod op2
-
-
-
-    //     if (e*d == 1 % phi){
-    //         cout << "okay...." <<endl;
-    //     }
-    //     else {
-    //         cout << "not okay" << endl;
-    //     }
-    }
-    else {
-        cout << " P and Q are not primes." << endl;
+        // D ≡ e^−1 (mod phi(n))
+        // mpz_invert op1*rop = 1 mod op2
+        
+        mpz_invert(d, e, phi);
+        mpz_clears(check, phi, NULL);
+        // cout << "d value: " << d << endl;
     }
 }
 
-// void encryptMsg(int pbk, string msg, int n){
-// //    For encryption, c = m^e mod n, where m = original message.
-//     int ciphertxt;
-//     int temp=1;
-//     int x;
+void encryptMsg(mpz_t pbk, string msg, mpz_t n){
+//    For encryption, c = m^e mod n, where m = original message.
+    mpz_t ciphertxt, x;
+    // int i = 0;
+    unsigned long int tst;
+    // mpz_class i; 
+    mpz_init(ciphertxt);
 
-//     for (int i = 0; i < msg.length(); i++)
-//     {
-//         x = int(msg.at(i));
-//         // cout << x << ".";
-//         // ciphertxt = powermod(x, pbk, n);
-//         // temp = pow(x, pbk); // m^e where m = message and e = public key
-//         // ciphertxt = temp % n; 
-//         for (int j= 0; j < pbk; j++){
-//             temp = x * temp;
-//         }
-//         ciphertxt = temp % n;
-//         cout << ciphertxt << "." ;
-//         encryption[i] = ciphertxt;
-//     }
-//     cout << endl;
     
-//     for (int j = 0; j < sizeof(encryption)/sizeof(encryption[0]); j++){
-//         cout << encryption[j] << " ";
-//     }
-//     cout <<"len " << sizeof(encryption)/sizeof(encryption[0]);
-//     // for (int j = 0; j < strlen(encryption); j++){
-//     //     cout << encryption[j] << " ";
-//     // }
-//     // cout <<"len " << strlen(encryption);
-//     cout << endl;
-// }
+    for (int i = 0; i < msg.length(); i++)
+    {
+        // x = int(msg.at(i));
+        mpz_init_set_ui(x, int(msg.at(i)));
 
-// void decryptMsg(int prvk, int n){
-// //    For decryption, m = c^d mod n.
-//     int spooky, temp=1;
-//     char spookyNoMore;
-//     char y;
+        // cout << x << ".";
+        // ciphertxt = powermod(x, pbk, n);
+        mpz_powm(ciphertxt, x, e, n);
 
-//     for (int i = 0; i < sizeof(encryption)/sizeof(encryption[0]); i++)
-//     { 
-//         y = int(encryption[i]); // y holds the encrypted message [int]
-//         cout << "y: " << y << endl;
-//         for (int j= 0; j < prvk; j++){
-//             temp = y * temp;
-//         }
-//         spooky = temp % n;
-//         // temp = pow(y, prvk);                // c^d where c = encrypted message and d = private key
-//         // spooky = fmod(temp, n);        
-//         cout << "spooky: " << spooky << endl;  
-//         spookyNoMore = char(spooky);
-//         // spookyNoMore = powermod(encryption[i], prvk, n);
-//         // spookyNoMore = int(pow(encryption[i], prvk)) % n;
-//         // spookyNoMore = fmod(encryption[i] * prvk, n);
-//         cout << spookyNoMore << " " << endl;
-//     }
-//     cout << endl;   
-// }
+        tst = mpz_get_ui(ciphertxt);
+        cout << char(tst) << " ";
+        arr.push_back(int(tst));
+    }
+    cout << endl;
+    mpz_clears(x, ciphertxt, NULL);
+}
+
+void decryptMsg(mpz_t prvk, mpz_t n){
+//    For decryption, m = c^d mod n.
+    mpz_t OG, c, temp;
+    mpz_init(c);
+
+    cout << prvk << " " << n << endl;
+
+    for (int i = 0; i < arr.size(); i++){
+        // cout << " i made it " <<endl;
+        mpz_init_set_ui(temp, arr[i]);
+        mpz_set(c, temp);
+        cout << temp << " ";
+        mpz_powm(OG, temp, prvk, n);
+
+    //     // cout << spookyNoMore << " "; 
+    }
+    cout <<endl; 
+}
 
 int main() {
 
     mpz_t p, q, n;
-    // const mpz_t apple = 55702919;
     mpz_init(n);
     mpz_init_set_ui(p, 11);
     mpz_init_set_ui(q, 13);
     mpz_mul(n, p, q);
 
-    cout << p << " " << q << " " << n  <<endl;
+    cout << p << " " << q << " " << n;
     
     cout << "\n... Generating public/private key ..." << endl;
     generate_keys(p , q);
-    // cout << "Public Key: " << e << endl;
-    // cout << "Private Key: " << d << endl;
+    cout << "Public Key: " << e << endl;
+    cout << "Private Key: " << d << endl;
 
-    // // cout << "test: " << fmod(d*e, toient) << endl;
+    string message = "apple sauce sucks.";
+    cout<<"\nOriginal Message = "<< message << endl;
+    cout << "... Encrypting message ..." << endl;
+    cout << "Encrypted Message: ";
+    encryptMsg(e, message, n);
 
-    // string message = "a";
-    // // string message = "apple sauce is gross.";
-    // cout<<"\nOriginal Message = "<< message << endl;
-    // cout << "\n... Encrypting message ..." << endl;
-    // cout << "Encrypted Message: ";
-    // encryptMsg(e, message, n);
-
-    // cout << "\n... Decrypting message ..." << endl;
-    // cout << "Decrypted Message: ";
-    // decryptMsg(d, n);
+    cout << "\n... Decrypting message ..." << endl;
+    cout << "Decrypted Message: ";
+    decryptMsg(d, n);
 
     return 0;
 }
