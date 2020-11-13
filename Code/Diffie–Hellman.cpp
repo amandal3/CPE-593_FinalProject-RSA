@@ -22,7 +22,10 @@ int main() {
 //main protocol, which performs the actual key exchange.	
 	
 	mpz_t p;  		//1. Choose a large prime p.
+					// p should have a similar length as the RSA modulus n, i.e., 1024 or beyond, in order to provide strong security
 	mpz_t alpha; 	//2. Choose an integer α ∈ {2,3, . . . , p−2}.
+					//The integer α needs to have a special property: It should be a primitive element, a topic
+					//which we discuss in the following sections. The
 	mpz_t op;		// Randomly generated number; used to get a prime number through mpz_nextprime 
 
 	
@@ -85,9 +88,50 @@ int main() {
 // Below:
 // Alice choose a = kpr,A ∈ {2, . . . , p−2}
 // Alice compute A = kpub,A ≡αa mod p
-
+// a is Alice's secret key
+// Alice computes A , and sent it to Bob
+	mpz_t a; 
+	mpz_t A;
+	mpz_inits(a, A, NULL);
+	
+	gmp_randstate_t state_a;
+	gmp_randinit_mt (state_a);
+	gmp_randseed_ui(state_a, time(NULL) );
+	mpz_urandomm(a, state_a, n2);		//choose a = kpr,A ∈ {2, . . . , p−2}
+	
+	mpz_powm(A, alpha, a, p);		//compute A = kpub,A ≡α^a mod p
+	
+	cout << "Alice secret key a: " << endl;
+	gmp_printf(" %Zd \n", a);
+	cout << endl;
+	
+	cout << "Alice public key A: " << endl;
+	gmp_printf(" %Zd \n", A);
+	cout << endl;
+	
 // Bob choose b = kpr,B ∈ {2, . . . , p−2}
 // Bob compute B = kpub,B ≡αb mod p
+// b is Bob's secret key
+// Bob computes B , and sent it to Alice
+	mpz_t b;
+	mpz_t B;
+	mpz_inits(b, B, NULL);
+	
+	gmp_randstate_t state_b;
+	gmp_randinit_mt (state_b);
+	gmp_randseed_ui(state_b, (time(NULL) + 50) );      // Added 50 to the seeding to ensure seeding is different than Alice's
+	mpz_urandomm(b, state_b, n2);		//choose b = kpr,B ∈ {2, . . . , p−2}
+	
+	mpz_powm(B, alpha, b, p);		//compute B = kpub,B ≡αb mod p
+
+
+	cout << "Bob secret key b: " << endl;
+	gmp_printf(" %Zd \n", b);
+	cout << endl;
+	
+	cout << "Bob public key B: " << endl;
+	gmp_printf(" %Zd \n", B);
+	cout << endl;
 
   return 0;
 }
