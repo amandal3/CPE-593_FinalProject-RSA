@@ -21,7 +21,8 @@ The implemented algorithem is a textbook algorithem. The algorithem can be impro
 to do:
 - Make generate p, q that are large engough to make encryption secure. Right now the algorithem accepts the first two prime numbers it can get.
 - Add padding to the algorithem
-- Use **void mpz_powm_sec (mpz t rop, const mpz t base, const mpz t exp** instead of  **mpz_powm** . 
+- Use **void mpz_powm_sec (mpz t rop, const mpz t base, const mpz t exp(** instead of  **mpz_powm** .
+
 *"This function is designed to take the same time and have the same cache access patterns for any two same-size arguments, assuming that function arguments are placed at the same position and that the machine state is identical upon function entry. This function is intended for cryptographic purposes, where resilience to side-channel attacks is desired."*
 
 
