@@ -19,7 +19,7 @@ Implement RSA using a biginteger library. It doesn’t have to be production qua
 The implemented algorithem is a textbook algorithem. The algorithem can be improved by adding padding. Each time the algorithem runs, it generate new two prime numbers and use them to generate the private and publick key. System time was used to seed the random number generator. 
 
 to do:
-- Make generate p, q that are large engough to make encryption secure. Right now the algorithem accepts the first two prime numbers it can get.
+- Generate p, q that are large engough to make encryption secure. Right now the algorithem accepts the first two prime numbers it can get.
 - Add padding to the algorithem
 - Use **void mpz_powm_sec (mpz t rop, const mpz t base, const mpz t exp(** instead of  **mpz_powm** .
 
