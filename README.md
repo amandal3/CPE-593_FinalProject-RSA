@@ -15,8 +15,8 @@ Implement RSA using a biginteger library. It doesn’t have to be production qua
 - Diffie-Hellman Key Exchange
 - RSA Algorithem
 
-## Tasks Completed: 
-The implemented algorithem is a textbook algorithem. The algorithem can be improved by adding padding.
+## RSA: 
+The implemented algorithem is a textbook algorithem. The algorithem can be improved by adding padding. Each time the algorithem runs, it generate new two large prime numbers and use them to generate the private and publick key. System time was used to seed the random number generator.
 
 The following is a screenshot for the RSA Algorithem test
 ![alt text](https://raw.githubusercontent.com/amandal3/CPE-593_FinalProject-RSA/main/Research%20Papers/RSA_test.png)
