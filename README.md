@@ -13,5 +13,10 @@ Implement RSA using a biginteger library. It doesn’t have to be production qua
 
 ## Tasks Completed: 
 - Diffie-Hellman Key Exchange
+- RSA Algorithem
 
+## Tasks Completed: 
+The implemented algorithem is a textbook algorithem. The algorithem can be improved by adding padding.
+
+The following is a screenshot for the RSA Algorithem test
 ![alt text](https://raw.githubusercontent.com/amandal3/CPE-593_FinalProject-RSA/main/Research%20Papers/RSA_test.png)
