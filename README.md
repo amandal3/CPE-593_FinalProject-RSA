@@ -4,7 +4,8 @@ Implement RSA using a biginteger library. It doesn’t have to be production qua
 
 
 ## Concerns: 
-- RSA is having problems with decrypt (Amanda: I'm sure how to debug - been stuck on it for a week now)
+- RSA is having problems with decrypt (Amanda: I'm sure how to debug - been stuck on it for a week now) - Fixed Dec 5, 2020
+- The algorithm doesn't generate large numbers for q, p. 
 
 ## Tasks To Do: 
 - Figure out RSA decrypt
