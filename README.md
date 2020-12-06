@@ -16,7 +16,7 @@ Implement RSA using a biginteger library. It doesn’t have to be production qua
 - RSA Algorithem
 
 ## RSA: 
-The implemented algorithem is a textbook algorithem. The algorithem can be improved by adding padding. Each time the algorithem runs, it generate new two prime numbers and use them to generate the private and publick key. System time was used to seed the random number generator. 
+The implemented algorithem is a textbook algorithm. The algorithm can be improved by adding padding. Each time the algorithm runs, it generate new two prime numbers and use them to generate the private and publick key. System time was used to seed the random number generator. 
 
 to do:
 - Generate p, q that are large engough to make encryption secure. Right now the algorithem accepts the first two prime numbers it can get.
