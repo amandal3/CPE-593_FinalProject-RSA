@@ -25,6 +25,7 @@ to do:
 
 *"This function is designed to take the same time and have the same cache access patterns for any two same-size arguments, assuming that function arguments are placed at the same position and that the machine state is identical upon function entry. This function is intended for cryptographic purposes, where resilience to side-channel attacks is desired."*
 
+- Feed text file to the algorithem instead of simple string.
 
 The following is a screenshot for the RSA Algorithem test
 ![alt text](https://raw.githubusercontent.com/amandal3/CPE-593_FinalProject-RSA/main/Research%20Papers/RSA_test.png)
