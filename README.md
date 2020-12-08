@@ -8,7 +8,7 @@ Implement RSA using a biginteger library. It doesn’t have to be production qua
 - The algorithm doesn't generate large numbers for q, p. 
 
 ## Tasks To Do: 
- Generate p, q that are large engough to make encryption secure. Right now the algorithem accepts the first two prime numbers it can get.
+- Generate p, q that are large engough to make encryption secure. Right now the algorithem accepts the first two prime numbers it can get.
 - Add padding to the algorithem
 - Use **void mpz_powm_sec (mpz t rop, const mpz t base, const mpz t exp(** instead of  **mpz_powm** .
 - Generate a very large prime either (p, q) then use **mpz_nextprime** to generate the other one.
