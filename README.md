@@ -21,8 +21,11 @@ Implement RSA using a biginteger library. It doesn’t have to be production qua
 - Put together final presentation
 
 ## Tasks Completed: 
-- Diffie-Hellman Key Exchange
-- RSA Algorithem
+- Diffie-Hellman Key Exchange (Written by Ghaith)
+- RSA Algorithm using GMP (Written by Amanda and Ghaith)
+- RSA Algorithm using Boost (Written by Neel)
+- Presentation (Made by Amanda)
+- Report (Writtenn by All)
 
 ## RSA: 
 The implemented algorithem is a textbook algorithm. The algorithm can be improved by adding padding. Each time the algorithm runs, it generate new two prime numbers and use them to generate the private and publick key. System time was used to seed the random number generator. 
